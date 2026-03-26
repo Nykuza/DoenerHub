@@ -1,86 +1,70 @@
 package Klassen;
 
-public class Laeden{
+/**
+ * Klasse für Döner-Laden.
+ * Model Layer: Datendarstellung und Validierung.
+ */
+public class Laeden {
+    private String name;
+    private String adresse;
 
-	public int ladenId;
-	public String ladenName;
-	public String anschrift;
-	public int hausnummer;
-	public String telefonnummer;
-	public double teuerstesProdukt;
-	public double guenstigstesProdukt;
-	public String zahlungsart;
-	public String bestellen;
-	
-	
-	public Laeden(){
-		
-	}
-	
-	public void setLadenId(int pLadenId){
-		this.ladenId = pLadenId;
-	}
-	
-	public void setLadenName(String pLadenName){
-		this.ladenName = pLadenName;
-	}
-	
-	public void setAnschrift(String pAnschrift){
-		this.anschrift = pAnschrift;
-	}
-	
-	public void setHausnummer(int pHausnummer){
-		this.hausnummer = pHausnummer;
-		
-	}
-	
-	public void setTelefonnummer(String pTelefonnummer){
-		this.telefonnummer = pTelefonnummer;
-	}
-	
-	public void setTeuerstesProdukt(double pTeuerstesProdukt){
-		this.teuerstesProdukt = pTeuerstesProdukt;
-	}
-	
-	public void setGuenstigstesProdukt(double pGuenstigstesProdukt){
-		this.guenstigstesProdukt = pGuenstigstesProdukt;
-	}
-	
-	public void setZahlungsart(String pZahlungsart){
-		this.zahlungsart = pZahlungsart;
-	}
-	
-	public void setBestellen(String pBestellen){
-		this.bestellen = pBestellen;
-	}
-	
-	public int getLadenId(){
-		return this.ladenId;
-	}
-	
-	public String getLadenName(){
-		return this.ladenName;
-	}
-	
-	public String getAnschrift(){
-		return this.anschrift;
-	}
-	
-	public int getHausnummer(){
-		return this.hausnummer;
-	}
-	
-	public String getTelefonnummer(){
-		return this.telefonnummer;
-	}
-	
-	public double getTeuerstesProdukt(){
-		return this.teuerstesProdukt;
-	}
-	
-	public double getGuenstigstesProdukt(){
-		return this.guenstigstesProdukt;
-	}
+    /**
+     * Konstruktor für Laaden.
+     *
+     * @param name Der Name des Ladens (nicht leer)
+     * @param adresse Die Adresse des Ladens (nicht leer)
+     * @throws IllegalArgumentException wenn name oder adresse leer sind
+     */
+    public Laeden(String name, String adresse) {
+        this.setName(name);
+        this.setAdresse(adresse);
+    }
+
+    /**
+     * Getter für Name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Setter für Name mit Validierung.
+     *
+     * @param name Der neue Name (nicht leer)
+     * @throws IllegalArgumentException wenn name leer ist
+     */
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Laden-Name darf nicht leer sein");
+        }
+        this.name = name.trim();
+    }
+
+    /**
+     * Getter für Adresse.
+     */
+    public String getAdresse() {
+        return adresse;
+    }
+
+    /**
+     * Setter für Adresse mit Validierung.
+     *
+     * @param adresse Die neue Adresse (nicht leer)
+     * @throws IllegalArgumentException wenn adresse leer ist
+     */
+    public void setAdresse(String adresse) {
+        if (adresse == null || adresse.trim().isEmpty()) {
+            throw new IllegalArgumentException("Laden-Adresse darf nicht leer sein");
+        }
+        this.adresse = adresse.trim();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Laden: %s (%s)", name, adresse);
+    }
+}
 	
 	public String getZahlungsart(){
 		return this.zahlungsart;
