@@ -7,6 +7,8 @@ import doener_verwaltung.model.Speisen;
 import doener_verwaltung.model.Getraenke;
 
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Main-Klasse: Einstiegspunkt und UI-Loop.
@@ -341,8 +343,8 @@ public class Main {
         System.out.printf("- Gesamtpreis: €%.2f%n", gesamt);
     }
 
-    private static java.util.List<doener_verwaltung.model.Speisen> getSelectedSpeisen(String input) {
-        var selected = new java.util.ArrayList<doener_verwaltung.model.Speisen>();
+    private static List<Speisen> getSelectedSpeisen(String input) {
+        var selected = new ArrayList<Speisen>();
         if (input.isBlank()) {
             return selected;
         }
@@ -358,8 +360,8 @@ public class Main {
         return selected;
     }
 
-    private static java.util.List<doener_verwaltung.model.Getraenke> getSelectedGetraenke(String input) {
-        var selected = new java.util.ArrayList<doener_verwaltung.model.Getraenke>();
+    private static List<Getraenke> getSelectedGetraenke(String input) {
+        var selected = new ArrayList<Getraenke>();
         if (input.isBlank()) {
             return selected;
         }
