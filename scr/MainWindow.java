@@ -38,16 +38,26 @@ public class MainWindow {
     }
 
     private boolean processChoice(int choice) {
-        switch (choice) {
-            case 1 -> manageLaeden();
-            case 2 -> manageSpeisen();
-            case 3 -> manageGetraenke();
-            case 4 -> runBestellRechner();
-            case 5 -> printSummary();
-            case 6 -> { return false; }
-            default -> System.out.println("❌ Ungültige Option!");
-        }
-        return true;
+        return switch (choice) {
+            case 1 -> { manageLaeden(); yield true; }
+            case 2 -> { manageSpeisen(); yield true; }
+            case 3 -> { manageGetraenke(); yield true; }
+            case 4 -> { runBestellRechner(); yield true; }
+            case 5 -> { printSummary(); yield true; }
+            case 6 -> false;
+            default -> { System.out.println("❌ Ungültige Option!"); yield true; }
+        };
+    }
+
+    // ===== MAIN MENU =====
+
+    private void printMainMenu() {
+        System.out.println("\n" + "=".repeat(40));
+        System.out.println("🍖 DoenerHub Verwaltungssystem");
+        System.out.println("=".repeat(40));
+        System.out.println("1. 🏪 Läden verwalten");
+        System.out.println("2. 🥙 Speisen verwalten");
+        System.out.println("3. 🥤 Getränke verwalten");
         System.out.println("4. 🧮 Bestellpreis berechnen");
         System.out.println("5. 📊 Übersicht");
         System.out.println("6. ❌ Beenden");

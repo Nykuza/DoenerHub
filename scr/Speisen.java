@@ -61,19 +61,3 @@ public class Speisen {
         return String.format("%s (€%.2f) [%s]", name, preis, kategorie);
     }
 }
-	}
-	public Boolean getVegetarisch(){
-		return this.vegetarisch;
-	}
-	public Boolean getVegan(){
-		return this.vegan;
-	}
-	public String getBeilagen(){
-		return this.beilagen;
-	}
-	
-	public String toString(){
-		return "SpeisenID:" + this.speisenId +"\n" + "Speisen Name:" + this.speisenName + "\n" + "Speisen Preis:" + this.speisenPreis + "\n" + "Fleisch Art:" + this.fleischArt + "\n"+"Vegetarisch? :" + this.vegetarisch + "\n"+ "Vegan? :" + this.vegan + "\n" + "Beilagen:" + this.beilagen;
-	}
-	
-}

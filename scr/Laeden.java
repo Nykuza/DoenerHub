@@ -65,18 +65,4 @@ public class Laeden {
         return String.format("Laden: %s (%s)", name, adresse);
     }
 }
-	
-	public String getZahlungsart(){
-		return this.zahlungsart;
-	}
-	
-	public String getBestellen(){
-		return this.bestellen;
-	}
-	
-	public String toString(){
-		return "LadenID:" + this.ladenId +"\n" + "LadenName:" + this.ladenName + "\n" + "Anschrift:" + this.anschrift + "\n" + "Hausnummer:" + this.hausnummer + "\n" + "Telefonnummer:" + this.telefonnummer + "\n" + "TeuerstesProdukt:" + this.teuerstesProdukt + "\n" + "GuenstigstesProdukt:" + this.guenstigstesProdukt + "\n" + "Zahlungsart:" + this.zahlungsart + "\n" + "Bestellen:" + this.bestellen + "\n";
-	}
-	
-}
 

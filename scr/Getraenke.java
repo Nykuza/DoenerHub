@@ -61,15 +61,3 @@ public class Getraenke {
         return String.format("%s (%s) - €%.2f", name, groesse, preis);
     }
 }
-	
-	public double getGFuellmenge(){
-		return this.gFuellmenge;
-	}
-	
-	public String toString(){
-		return "GetraenkeID:" + this.getraenkeId +"\n" + "Name:" + this.gName + "\n" + "Preis:" + this.gPreis + "\n" + "Form:" + this.gForm + "\n" + "Fuellmenge:" + this.gFuellmenge + "\n";
-	}
-	
-
-
-}
