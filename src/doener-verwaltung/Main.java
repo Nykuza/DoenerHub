@@ -1,6 +1,7 @@
 package doener_verwaltung;
 
 import doener_verwaltung.controller.Orte;
+import doener_verwaltung.controller.BestellRechner;
 import doener_verwaltung.model.Laeden;
 import doener_verwaltung.model.Speisen;
 import doener_verwaltung.model.Getraenke;
@@ -14,10 +15,12 @@ import java.util.Scanner;
 public class Main {
     
     private static Orte orte;
+    private static BestellRechner bestellRechner;
     private static Scanner scanner;
     
     public static void main(String[] args) {
         orte = new Orte();
+        bestellRechner = new BestellRechner();
         scanner = new Scanner(System.in);
         
         // Beispieldaten laden
@@ -33,8 +36,9 @@ public class Main {
                 case 1 -> manageLaeden();
                 case 2 -> manageSpeisen();
                 case 3 -> manageGetraenke();
-                case 4 -> printSummary();
-                case 5 -> running = false;
+                case 4 -> runBestellRechner();
+                case 5 -> printSummary();
+                case 6 -> running = false;
                 default -> System.out.println("❌ Ungültige Option!");
             }
         }
@@ -52,8 +56,9 @@ public class Main {
         System.out.println("1. 🏪 Läden verwalten");
         System.out.println("2. 🥙 Speisen verwalten");
         System.out.println("3. 🥤 Getränke verwalten");
-        System.out.println("4. 📊 Übersicht");
-        System.out.println("5. ❌ Beenden");
+        System.out.println("4. 🧮 Bestellpreis berechnen");
+        System.out.println("5. 📊 Übersicht");
+        System.out.println("6. ❌ Beenden");
         System.out.println("=".repeat(40));
     }
     
@@ -289,6 +294,85 @@ public class Main {
         System.out.printf("🥙 Speisen: %d%n", orte.getSpeiseCount());
         System.out.printf("🥤 Getränke: %d%n", orte.getGetraenkCount());
         System.out.println("=".repeat(40));
+    }
+
+    private static void runBestellRechner() {
+        System.out.println("\n" + "-".repeat(40));
+        System.out.println("🧮 Bestellpreis-Rechner");
+        System.out.println("-".repeat(40));
+
+        if (orte.getSpeiseCount() == 0 && orte.getGetraenkCount() == 0) {
+            System.out.println("❌ Keine Speisen oder Getränke vorhanden, zuerst Artikel anlegen!");
+            return;
+        }
+
+        System.out.println("📌 Bitte wähle Speisen (Nummern, mit Komma):");
+        listAllSpeisen();
+        String speisenInput = readStringInput("Auswahl Speisen: ");
+        System.out.println("📌 Bitte wähle Getränke (Nummern, mit Komma):");
+        listAllGetraenke();
+        String getraenkeInput = readStringInput("Auswahl Getränke: ");
+
+        var ausgewählteSpeisen = getSelectedSpeisen(speisenInput);
+        var ausgewählteGetraenke = getSelectedGetraenke(getraenkeInput);
+
+        if (ausgewählteSpeisen.isEmpty() && ausgewählteGetraenke.isEmpty()) {
+            System.out.println("❌ Keine Artikel gewählt.");
+            return;
+        }
+
+        boolean mitLieferung = readStringInput("Lieferung? (j/n): ").equalsIgnoreCase("j");
+        double entfernung = 0;
+        if (mitLieferung) {
+            entfernung = Math.max(0, readDoubleInput("Entfernung in km: "));
+        }
+
+        double warenwert = bestellRechner.berechneWarenwert(ausgewählteSpeisen, ausgewählteGetraenke);
+        double rabatt = bestellRechner.berechneRabatt(warenwert);
+        double lieferkosten = mitLieferung ? bestellRechner.berechneLieferkosten(entfernung) : 0;
+        double gesamt = bestellRechner.berechneTotalpreis(ausgewählteSpeisen, ausgewählteGetraenke, entfernung, mitLieferung);
+
+        System.out.println("\n✅ Bestellübersicht:");
+        System.out.printf("- Warenwert: €%.2f%n", warenwert);
+        System.out.printf("- Rabatt: -€%.2f%n", rabatt);
+        if (mitLieferung) {
+            System.out.printf("- Lieferkosten: €%.2f%n", lieferkosten);
+        }
+        System.out.printf("- Gesamtpreis: €%.2f%n", gesamt);
+    }
+
+    private static java.util.List<doener_verwaltung.model.Speisen> getSelectedSpeisen(String input) {
+        var selected = new java.util.ArrayList<doener_verwaltung.model.Speisen>();
+        if (input.isBlank()) {
+            return selected;
+        }
+        for (String part : input.split(",")) {
+            try {
+                int idx = Integer.parseInt(part.trim()) - 1;
+                if (idx >= 0 && idx < orte.getAllSpeisen().size()) {
+                    selected.add(orte.getAllSpeisen().get(idx));
+                }
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return selected;
+    }
+
+    private static java.util.List<doener_verwaltung.model.Getraenke> getSelectedGetraenke(String input) {
+        var selected = new java.util.ArrayList<doener_verwaltung.model.Getraenke>();
+        if (input.isBlank()) {
+            return selected;
+        }
+        for (String part : input.split(",")) {
+            try {
+                int idx = Integer.parseInt(part.trim()) - 1;
+                if (idx >= 0 && idx < orte.getAllGetraenke().size()) {
+                    selected.add(orte.getAllGetraenke().get(idx));
+                }
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return selected;
     }
     
     // ===== HELPER INPUT-METHODEN =====
