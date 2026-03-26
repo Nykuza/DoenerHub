@@ -2,6 +2,7 @@ package Klassen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Klasse für Orte (Locations) - verwaltung aller Läden, Speisen, Getränke.
@@ -59,7 +60,9 @@ public class OrteController {
     public List<Speisen> getSpeiseByKategorie(String kategorie) {
         return speisen.stream()
                 .filter(s -> s.getKategorie().equalsIgnoreCase(kategorie))
-                .toList();
+                .collect(Collectors.toList());
+    }
+
     // ===== GETRÄNKE =====
 
     public void addGetraenk(Getraenke getraenk) {
