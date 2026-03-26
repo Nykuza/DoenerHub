@@ -9,9 +9,9 @@ import java.util.Scanner;
  * View Layer: Konsolen-basierte Benutzeroberfläche.
  */
 public class MainWindow {
-    private OrteController orte;
-    private BestellRechner bestellRechner;
-    private Scanner scanner;
+    private final OrteController orte;
+    private final BestellRechner bestellRechner;
+    private final Scanner scanner;
 
     /**
      * Konstruktor: Initialisiert Controller und Scanner.
@@ -31,31 +31,23 @@ public class MainWindow {
         while (running) {
             printMainMenu();
             int choice = readIntInput("Wähle eine Option: ");
-
-            switch (choice) {
-                case 1 -> manageLaeden();
-                case 2 -> manageSpeisen();
-                case 3 -> manageGetraenke();
-                case 4 -> runBestellRechner();
-                case 5 -> printSummary();
-                case 6 -> running = false;
-                default -> System.out.println("❌ Ungültige Option!");
-            }
+            running = processChoice(choice);
         }
-
         System.out.println("\n✅ Auf Wiedersehen!");
         scanner.close();
     }
 
-    // ===== MAIN MENU =====
-
-    private void printMainMenu() {
-        System.out.println("\n" + "=".repeat(40));
-        System.out.println("🍖 DoenerHub Verwaltungssystem");
-        System.out.println("=".repeat(40));
-        System.out.println("1. 🏪 Läden verwalten");
-        System.out.println("2. 🥙 Speisen verwalten");
-        System.out.println("3. 🥤 Getränke verwalten");
+    private boolean processChoice(int choice) {
+        switch (choice) {
+            case 1 -> manageLaeden();
+            case 2 -> manageSpeisen();
+            case 3 -> manageGetraenke();
+            case 4 -> runBestellRechner();
+            case 5 -> printSummary();
+            case 6 -> { return false; }
+            default -> System.out.println("❌ Ungültige Option!");
+        }
+        return true;
         System.out.println("4. 🧮 Bestellpreis berechnen");
         System.out.println("5. 📊 Übersicht");
         System.out.println("6. ❌ Beenden");

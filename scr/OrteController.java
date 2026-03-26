@@ -8,19 +8,9 @@ import java.util.List;
  * Controller Layer: Business-Logik und Datenverwaltung.
  */
 public class OrteController {
-    private List<Laeden> laeden;
-    private List<Speisen> speisen;
-    private List<Getraenke> getraenke;
-
-    /**
-     * Konstruktor initialisiert leere Listen.
-     */
-    public OrteController() {
-        this.laeden = new ArrayList<>();
-        this.speisen = new ArrayList<>();
-        this.getraenke = new ArrayList<>();
-    }
-
+    private final List<Laeden> laeden = new ArrayList<>();
+    private final List<Speisen> speisen = new ArrayList<>();
+    private final List<Getraenke> getraenke = new ArrayList<>();
     // ===== LÄDEN =====
 
     public void addLaden(Laeden laden) {
@@ -65,20 +55,11 @@ public class OrteController {
 
     /**
      * Filtert Speisen nach Kategorie.
-     *
-     * @param kategorie Die gesuchte Kategorie
-     * @return Liste der Speisen in dieser Kategorie
      */
     public List<Speisen> getSpeiseByKategorie(String kategorie) {
-        List<Speisen> result = new ArrayList<>();
-        for (Speisen speise : speisen) {
-            if (speise.getKategorie().equalsIgnoreCase(kategorie)) {
-                result.add(speise);
-            }
-        }
-        return result;
-    }
-
+        return speisen.stream()
+                .filter(s -> s.getKategorie().equalsIgnoreCase(kategorie))
+                .toList();
     // ===== GETRÄNKE =====
 
     public void addGetraenk(Getraenke getraenk) {
